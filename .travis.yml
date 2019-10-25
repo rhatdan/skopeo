@@ -6,6 +6,10 @@ matrix:
      sudo: required
      services:
        - docker
+     before_install:
+	 - sudo add-apt-repository -y ppa:projectatomic/ppa
+	 - sudo apt-get update
+	 - sudo podman
   -  os: osx
 
 notifications:
@@ -22,4 +26,4 @@ install:
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then hack/travis_osx.sh ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make vendor && ./hack/tree_status.sh && make check ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make vendor-in-container && ./hack/tree_status.sh && make check ; fi
